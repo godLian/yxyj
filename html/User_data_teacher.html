@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>教员资料完善_易教易学网</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/luara.left.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/user.css">
+
+    <!--地区选择 js文件-->
+	<script src="../js/area.js"></script>
+    <script type="text/javascript" src="../js/jquery-1.10.1.min.js"></script>
+    <!--文字轮换 js文件-->
+    <script type="text/javascript" src="../js/jquery.SuperSlide.2.1.1.js"></script>
+    <!--Luara js文件-->
+    <script src="../js/jquery.luara.0.0.1.min.js"></script>
+    <!--tab选项卡 js文件-->
+    <script type="text/javascript" src="../js/admin.js"></script>
+</head>
+<body>
+<!--头部-->
+<div id="headerBar">
+    <!--登陆\注册-->
+    <div class="topbar">
+        <div class="topbox">
+            <div class="box_1">
+                您好！欢迎来到易学易教网！<a href="#">请登录</a> | <a href="#">免费注册</a>
+            </div>
+            <div class="box_2">
+                <div class="fav">
+                    <div class="tel">
+                        <span>全国投诉专线：18359337329</span>
+                    </div>
+                    <span>&nbsp;|&nbsp;<a href="javascript:window.external.addFavorite(&#39;http://www.ygjj.com&#39;,&#39;阳光家教网&#39;)">收藏本站</a></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Logo\搜索-->
+    <div class="logoBar">
+        <div class="comWidth">
+            <div class="logo fl">
+                <a href="#"><img src="../images/logo.jpg"></a>
+            </div>
+            <div class="all fl">
+                <div class="head">
+                    <p><label class="diqu"></label></p>
+                    <p><label class="btn">[更多城市]</label></p>
+                </div>
+                <!--弹出层（选择城市）-->
+                <div class="cityBox">
+                    <div class="head">
+                        <span class="title">选择城市</span>
+                        <span class="close" onClick="closeFun()">关闭</span>
+                    </div>
+                    <div class="cont">
+                        <div class="c1">
+                            <label class="bt">省/直辖市：</label>
+                            <ul class="list" id="province"></ul>
+                        </div>
+                        <ul class="list" style="width: 100%;margin-left: 20px" id="city"></ul>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(function(){
+                    var this_ity;
+                    $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function(_result) {
+                        if (remote_ip_info.ret == '1') {
+                          this_ity=remote_ip_info.city;
+                            var myDate = new Date();
+                            var thisDate=myDate.getMonth()+1;
+                            $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function(_result) {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "http://wthrcdn.etouch.cn/weather_mini?city="+this_ity,
+                                    dataType: "json",
+                                    success: function(data){
+                                        if(data.status==1000){
+                                            var date=[];
+                                            var json=data.data;
+                                            $(".diqu").html(json.city);
+                                        }else{
+                                            alert("获取数据错误")
+                                        }
+                                    }
+                                });
+                            });
+                        } else {
+                            alert('没有找到匹配的IP地址信息！');
+                        }
+                    });
+
+                });
+            function cityBtn(obj){
+                closeFun();
+                var cityS=$(obj).html();
+                var myDate = new Date();
+                var thisDate=myDate.getMonth()+1;
+                $.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function(_result) {
+                    $.ajax({
+                        type: "GET",
+                        url: "http://wthrcdn.etouch.cn/weather_mini?city="+cityS,
+                        dataType: "json",
+                        success: function(data){
+                            if(data.status==1000){
+                                var date=[];
+                                var json=data.data;
+                                $(".diqu").html(json.city);
+                            }else{
+                                alert("获取数据错误")
+                            }
+
+                        }
+                    });
+                });
+            }
+            function closeFun() {
+                $("#province").html("");
+                $("#city").html("");
+                $(".cityBox").hide();
+            }
+            </script>
+            <div class="search_box fl">
+                <input type="text" name="search_text" class="search_text fl">
+                <input type="button" value="搜 索" class="search_btn fr">
+            </div>
+            <div class="shopCar fr">
+                <span class="shopText fl">购物车</span>
+                <span class="shopNum fl">0</span>
+            </div>
+        </div>
+    </div>
+    <!--导航栏-->
+    <div class="nav clearfix">
+        <div class="comWidth">
+            <ul>
+                <li>
+                    <a href="#">首页</a>
+                </li>
+                <li class="sunav"><a href="#">教师秀</a>
+                    <span>
+                        <ul>
+                            <li><a href="#">幼教老师</a></li>
+                            <li><a href="#">小学老师</a></li>
+                            <li><a href="#">初中老师</a></li>
+                            <li><a href="#">高中老师</a></li>
+                            <li><a href="#">应届高考生</a></li>
+                            <li><a href="#">文科状元</a></li>
+                            <li><a href="#">理科状元</a></li>
+                        </ul>
+                    </span>
+                </li>
+                <li class="sunav"><a href="#">课程教辅</a>
+                    <span>
+                        <ul>
+                            <li><a href="#">语文</a></li>
+                            <li><a href="#">数学</a></li>
+                            <li><a href="#">外文</a></li>
+                            <li><a href="#">思想政治</a></li>
+                            <li><a href="#">历史</a></li>
+                            <li><a href="#">地理</a></li>
+                            <li><a href="#">物理</a></li>
+                            <li><a href="#">化学</a></li>
+                            <li><a href="#">生物</a></li>
+                        </ul>
+                    </span>
+                </li>
+                <li class="sunav"><a href="#">课外兴趣</a>
+                    <span>
+                        <ul>
+                            <li><a href="#">声乐</a></li>
+                            <li><a href="#">美术</a></li>
+                            <li><a href="#">形体</a></li>
+                            <li><a href="#">体能/运动</a></li>
+                            <li><a href="#">信息技术</a></li>
+                        </ul>
+                    </span>
+                </li>
+                <li class="sunav"><a href="#">教育资讯</a></li>
+                <li class="sunav"><a href="#">教育心得</a></li>
+                <li class="sunav"><a href="#">BBS论坛</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--教员资料完善-->
+<div class="containerBox">
+        <!--container-->
+        <div class="comWidth">
+            <!--bread-->
+            <div class="bread">
+                <div class="dh">
+                    当前位置：<a href="">首页</a> &gt; 教员中心
+                </div>
+            </div>
+            <div class="container2">
+                
+                <div class="uleft fl">
+                    <div class="txBox">
+                        <div class="txBox2">
+                            <img src="../images/tx_0.jpg">
+                        </div>
+                        <div class="txBox3">
+                            <a href="http://longyan.ygjj.com/Teacher/HeadImg.aspx">更改头像</a>
+                        </div>
+                    </div>
+                    <div class="unav">
+                        <div class="tit tit2">&nbsp;</div>
+                        <div class="item">
+                            <a href="http://longyan.ygjj.com/Teacher/TeachList.aspx">我的订单</a>
+                        </div>
+                        <div class="item">
+                            <a href="http://longyan.ygjj.com/Teacher/OrderList.aspx">预约记录</a>
+                        </div>
+                        <div class="tit tit3">
+                            &nbsp;</div>
+                        <div class="item">
+                            <a href="#" style="color:#f90;">修改完善资料</a>
+                        </div>
+                        <div class="item">
+                            <a href="http://longyan.ygjj.com/Teacher/PasswordManage.aspx">更改密码</a>
+                        </div>
+                        <div class="item">
+                            <a href="http://longyan.ygjj.com/Teacher/MyBoards.aspx">留言反馈</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="uright">
+                    <div class="uhead">更改基本资料</div>
+                    <div class="editBox">
+                        <div class="ui_editTit">基本信息</div>
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <th>教员编号：</th>
+                                <td colspan="3">
+                                    <span id="lblDisId" style="color:Red;">1044</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th width="20%">会员账号：</th>
+                                <td width="30%">
+                                    <span id="lblAccount" style="color:Red;">jecklian</span>
+                                </td>
+                                <th width="20%">认证/签约：</th>
+                                <td width="30%">
+                                    <span>已认证</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>真实姓名：</th>
+                                <td>
+                                    <span id="lblName">连惠男</span>
+                                </td>
+                                <th>性&nbsp;&nbsp;别：
+                                </th>
+                                <td>
+                                    <span id="lblGendar">男</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>身份证号：</th>
+                                <td>
+                                    <span id="lblIdentity">3505xxxxxxxxxxxxxx</span>
+                                </td>
+                                <th>民&nbsp;&nbsp;族：
+                                </th>
+                                <td>
+                                    <span id="lblNative">汉族</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>出生年月：</th>
+                                <td>
+                                    <span id="lblBirthday">1995-11</span>
+                                </td>
+                                <th>来自省份：</th>
+                                <td>
+                                    <span id="lblProvince">福建</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>最高学历：</th>
+                                <td>
+                                    <span id="lblTopDegree">本科在读</span>
+                                </td>
+                                <th>就读学校：</th>
+                                <td>
+                                    <span id="lblCollegeName">龙岩学院</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>政治面貌：</th>
+                                <td>
+                                    <span id="lblHighSchool">团员</span>
+                                </td>
+                                <th>所学专业：</th>
+                                <td>
+                                    <span id="lblMajor">软件工程</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>现有身份：
+                                <td>
+                                    <span id="lblIdentitys">在校大四学生</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="ui_editTit">主要特长</div>
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <th width="20%">普 通 话：</th>
+                                <td>
+                                    <select name="Chinese$lstChinese" id="Chinese_lstChinese" class="ddl">
+                                            <option selected="selected" value="标准">标准</option>
+                                            <option value="一般">一般</option>
+                                            <option value="较差">较差</option>
+                                        </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>外&nbsp;&nbsp;语：</th>
+                                <td>
+                                    <select name="Foreign$lstForeign" id="Foreign_lstForeign" class="ddl">
+                                        <option selected="selected" value="无">无</option>
+                                        <option value="英语">英语</option>
+                                        <option value="日语">日语</option>
+                                        <option value="法语">法语</option>
+                                        <option value="德语">德语</option>
+                                        <option value="俄语">俄语</option>
+                                        <option value="朝鲜语">朝鲜语</option>
+                                        <option value="西班牙语">西班牙语</option>
+                                        <option value="阿拉伯语">阿拉伯语</option>
+                                        <option value="其它">其它</option>
+                                    </select>
+                                    <select name="Foreign$lstRank" id="Foreign_lstRank" class="ddl">
+                                        <option selected="selected" value="无">无</option>
+                                        <option value="一级">一级</option>
+                                        <option value="二级">二级</option>
+                                        <option value="三级">三级</option>
+                                        <option value="四级">四级</option>
+                                        <option value="专四">专四</option>
+                                        <option value="六级">六级</option>
+                                        <option value="专八">专八</option>
+                                        <option value="精通">精通</option>
+                                        <option value="熟练">熟练</option>
+                                        <option value="良好">良好</option>
+                                        <option value="一般">一般</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>自我描述&nbsp;<br>特长展示：</th>
+                                <td>
+                                    <textarea name="txtSpecial" rows="3" cols="20" id="txtSpecial" class="textarea" style="width:288px;"></textarea><br>
+                                    展示实力，增加你的魅力！比如你竞赛中获得过什么奖项，取得过什么出色的成绩，有哪些过硬的证书之类。
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>家教经历&nbsp;<br>教学成果：</th>
+                                <td>
+                                    <textarea name="txtExperience" rows="3" cols="20" id="txtExperience" class="textarea" style="width:288px;"></textarea><br>
+                                    这些内容是对你教学水平最有力和最直接的反映！是学员选择你的一项重要依据。
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="ui_editTit">联系方式</div>
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <th>手机/电话：</th>
+                                <td>
+                                    <input name="txtMobile" type="text" value="18359337329" id="txtMobile" class="txt" style="width:144px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>QQ/WeChat：</th>
+                                <td>
+                                    <input name="txtonline" type="text" value="956645947" id="txtonline" class="txt" style="width:144px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Email：</th>
+                                <td>
+                                    <input name="txtEmail" type="text" id="txtEmail" class="txt" style="width:224px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>通讯地址：</th>
+                                <td>
+                                    <input name="txtAddress" type="text" value="龙岩学院一组团六栋" id="txtAddress" class="txt" style="width:224px;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>邮政编码：</th>
+                                <td>
+                                    <input name="txtZipcode" type="text" value="362800" id="txtZipcode" class="txt" style="width:80px;"><input name="txtCity" type="hidden" id="txtCity" value="168">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="ui_editTit">家教意愿</div>
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody><tr>
+                                <th width="20%">教授科目：</th>
+                                <td>
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                        <tbody>
+                                        <tr>
+                                            <td width="120">
+                                                <select name="Subject$lstSubject" id="Subject_lstSubject" style="WIDTH: 180px;height:180px" multiple="multiple" size="10" class="ddl">
+                                                    <option value="">请选择家教科目</option>
+                                                    <option value="">---学龄前---</option>
+                                                    <option value="幼小衔接">幼小衔接</option>
+                                                    <option value="学前教育">学前教育</option>
+                                                    <option value="幼儿陪玩">幼儿陪玩</option>
+                                                    <option value="幼儿托管">幼儿托管</option>
+                                                    <option value="珠心算">珠心算</option>
+                                                    <option value=""></option>
+                                                    <option value="">--小学课程--</option>
+                                                    <option value="小学语文">小学语文</option>
+                                                    <option value="小学数学">小学数学</option>
+                                                    <option value="小学英语">小学英语</option>
+                                                    <option value="小学奥数">小学奥数</option>
+                                                    <option value="小学陪读">小学陪读</option>
+                                                    <option value="小升初">小升初</option>
+                                                    <option value=""></option>
+                                                    <option value="">--初中课程--</option>
+                                                    <option value="初中语文">初中语文</option>
+                                                    <option value="初中英语">初中英语</option>
+                                                    <option value="初中数学">初中数学</option>
+                                                    <option value="初中物理">初中物理</option>
+                                                    <option value="初中化学">初中化学</option>
+                                                    <option value="初中生物">初中生物</option>
+                                                    <option value="初中历史">初中历史</option>
+                                                    <option value="初中地理">初中地理</option>
+                                                    <option value="初中政治">初中政治</option>
+                                                    <option value="初中奥数">初中奥数</option>
+                                                    <option value=""></option>
+                                                    <option value="">--高中课程--</option>
+                                                    <option value="高中语文">高中语文</option>
+                                                    <option value="高中英语">高中英语</option>
+                                                    <option value="高中数学">高中数学</option>
+                                                    <option value="高中物理">高中物理</option>
+                                                    <option value="高中化学">高中化学</option>
+                                                    <option value="高中生物">高中生物</option>
+                                                    <option value="高中历史">高中历史</option>
+                                                    <option value="高中地理">高中地理</option>
+                                                    <option value="高中政治">高中政治</option>
+                                                    <option value="高中奥数">高中奥数</option>
+                                                    <option value=""></option>
+                                                    <option value="">--艺术/乐器--</option>
+                                                    <option value="钢琴">钢琴</option>
+                                                    <option value="电子琴">电子琴</option>
+                                                    <option value="小提琴">小提琴</option>
+                                                    <option value="中提琴">中提琴</option>
+                                                    <option value="大提琴">大提琴</option>
+                                                    <option value="长笛">长笛</option>
+                                                    <option value="吉它">吉它</option>
+                                                    <option value="手风琴">手风琴</option>
+                                                    <option value="萨克斯">萨克斯</option>
+                                                    <option value="黑管">黑管</option>
+                                                    <option value="单簧管">单簧管</option>
+                                                    <option value="双簧管">双簧管</option>
+                                                    <option value="打击乐">打击乐</option>
+                                                    <option value="小号">小号</option>
+                                                    <option value="大号">大号</option>
+                                                    <option value="圆号">圆号</option>
+                                                    <option value="二胡">二胡</option>
+                                                    <option value="笛子">笛子</option>
+                                                    <option value="琵琶">琵琶</option>
+                                                    <option value="古筝">古筝</option>
+                                                    <option value="唢呐">唢呐</option>
+                                                    <option value="笙">笙</option>
+                                                    <option value="箫">箫</option>
+                                                    <option value="埙">埙</option>
+                                                    <option value="巴乌">巴乌</option>
+                                                    <option value="葫芦丝">葫芦丝</option>
+                                                    <option value="扬琴">扬琴</option>
+                                                    <option value="柳琴">柳琴</option>
+                                                    <option value="中阮">中阮</option>
+                                                    <option value="古琴">古琴</option>
+                                                    <option value="三弦">三弦</option>
+                                                    <option value="板胡">板胡</option>
+                                                    <option value="三味线">三味线</option>
+                                                    <option value="尤克里里">尤克里里</option>
+                                                    <option value=""></option>
+                                                    <option value="">--课外技能拓展--</option>
+                                                    <option value="摄影">摄影</option>
+                                                    <option value="书法">书法</option>
+                                                    <option value="美术">美术</option>
+                                                    <option value="儿童画">儿童画</option>
+                                                    <option value="卡通画">卡通画</option>
+                                                    <option value="中国画">中国画</option>
+                                                    <option value="西洋画">西洋画</option>
+                                                    <option value="服装表演">服装表演</option>
+                                                    <option value="交谊舞">交谊舞</option>
+                                                    <option value="拉丁舞">拉丁舞</option>
+                                                    <option value="民族舞">民族舞</option>
+                                                    <option value="芭蕾舞">芭蕾舞</option>
+                                                    <option value="爵士舞">爵士舞</option>
+                                                    <option value="少儿舞">少儿舞</option>
+                                                    <option value="街舞">街舞</option>
+                                                    <option value="声乐">声乐</option>
+                                                    <option value="表演">表演</option>
+                                                    <option value="演讲与主持">演讲与主持</option>
+                                                    <option value="话剧">话剧表演</option>
+                                                    <option value="信息技术">信息技术</option>
+                                                    <option value="围棋">围棋</option>
+                                                    <option value="中国象棋">中国象棋</option>
+                                                    <option value="国际象棋">国际象棋</option>
+                                                    <option value="国际跳棋">国际跳棋</option>
+                                                    <option value="五子棋">五子棋</option>
+                                                    <option value="桥牌">桥牌</option>
+                                                    <option value="中国武术">中国武术</option>
+                                                    <option value="拳击">拳击</option>
+                                                    <option value="太极拳">太极拳</option>
+                                                    <option value="跆拳道">跆拳道</option>
+                                                    <option value="空手道">空手道</option>
+                                                    <option value="健美">健美</option>
+                                                    <option value="体操">体操</option>
+                                                    <option value="瑜珈">瑜珈</option>
+                                                    <option value="滑冰旱冰">滑冰旱冰</option>
+                                                    <option value="游泳">游泳</option>
+                                                    <option value="保龄球">保龄球</option>
+                                                    <option value="乒乓球">乒乓球</option>
+                                                    <option value="羽毛球">羽毛球</option>
+                                                    <option value="网球">网球</option>
+                                                    <option value="篮球">篮球</option>
+                                                    <option value="足球">足球</option>
+                                                    <option value="排球">排球</option>
+                                                    <option value="魔术">魔术</option>
+                                                    <option value=""></option>
+                                                </select>
+                                            </td>
+                                            <td valign="middle" align="center" width="120">
+                                                <p>
+                                                    <input onclick="AddSubject(document.all(&quot;Subject_lstSubject&quot;),document.all(&quot;lstMySubject&quot;),document.all(&quot;txtHidden&quot;))" type="button" size="20" value="添加科目&gt;&gt;">
+                                                </p>
+                                                添加请先选左侧<br>
+                                                项目点“添加”<br>
+                                                删除请先选右侧<br>
+                                                项目点“删除”
+                                                <p>
+                                                    <input onclick="DelSubject(document.all(&quot;lstMySubject&quot;),document.all(&quot;txtHidden&quot;))" type="button" size="20" value="&lt;&lt;删除科目">
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <select name="lstMySubject" id="lstMySubject" style="width: 175px;height:175px" multiple="multiple" size="10" class="ddl">
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>薪酬要求：</th>
+                                <td>
+                                    <textarea name="txtSalary" rows="2" cols="20" id="txtSalary" class="txt" style="width:258px;">执行易学易教网薪水标准</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>&nbsp;
+                                    
+                                </th>
+                                <td>
+                                    <input type="submit" name="btnSubmit" value="" onclick="if(!CheckForm()) return false;" id="btnSubmit" class="btn">
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+            <!--end container2-->
+        </div>
+        <!--idx end container-->
+        <div class="clear20">
+        </div>
+    </div>
+<!--底部-->
+<div class="footNavBox">
+    <div class="footNav">
+        <div class="cityTel">
+            <span>厦门热线</span><p>400-700-7788</p>
+        </div>
+        <div class="navBox">
+            <dl>
+                <dt>会员指南</dt>
+                <dd>
+                    <span>→ </span><a href="#">帮助中心</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">如何请家教</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">如何做家教</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">教辅人员签约协议</a></dd>
+            </dl>
+            <dl>
+                <dt>支付方式</dt>
+                <dd>
+                    <span>→ </span><a href="#">在线支付</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">银行转账</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">资费标准</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">退款说明</a></dd>
+            </dl>
+            <dl>
+                <dt>服务条款</dt>
+                <dd>
+                    <span>→ </span><a href="#">隐私保护</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">侵权处理</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">免责说明</a></dd>
+            </dl>
+            <dl>
+                <dt>关于我们</dt>
+                <dd>
+                    <span>→ </span><a href="#">易学易教网简介</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">易学易教网公告</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">联系我们</a></dd>
+                <dd>
+                    <span>→ </span><a href="#">友情链接</a></dd>
+            </dl>
+        </div>
+        <div class="clearfix">
+        </div>
+        <div class="ps">
+            【易学易教网】是中国规模较大的正规、专业家教网站。我们为您提供最优质的厦门家教，帮助厦门小老师、中学老师和大学生家教寻求家教兼职。欢迎致电<span class="focus">400-700-7788</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

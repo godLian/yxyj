@@ -1,0 +1,60 @@
+/*--左边框--*/
+.ucleft{ 
+	float:left;
+	width:143px; 
+	padding-right:1px;
+	background: #f9f9f9;
+}
+.ucleft .txBox{ 
+	padding:20px 0px;
+}
+.ucleft .txBox .txBox2{ 
+	margin:0px auto; 
+	width:90px; 
+	height:100px; 
+	padding:5px; 
+	overflow:hidden; 
+	background:url(../images/tx_0.jpg) 100px 90px no-repeat ;
+}
+.ucleft .txBox .txBox2 img{ 
+	width:90px; 
+	height:100px;
+}
+.ucleft .txBox .txBox3{ 
+	text-align:center;
+}
+.ucleft .unav .tit{ 
+	height:31px; 
+	background:url(../images/icon/img08.png) no-repeat; 
+	text-indent:34px;
+}
+.ucleft .unav .tit2{ 
+	background:url(../images/icon/img07.png) no-repeat;
+}
+.ucleft .unav .tit3{
+	background:url(../images/icon/img06.png) no-repeat;
+}
+.ucleft .unav .item{ 
+	line-height:26px; 
+	height:26px;
+	text-indent:34px;
+}
+/*--右边框--*/
+.ucright{ 
+	float:left; 
+	width:854px; 
+	overflow:hidden;
+	border-left: #e2e2e2 solid 1px;
+	background: #fff;
+}
+.ucright .uhead{ 
+	line-height:34px; 
+	height:34px; 
+	border-bottom:#e2e2e2 1px solid; 
+	color:#333;
+	font-size:16px; 
+	font-weight:bold;
+	background:#f7f7f7; 
+	text-indent:24px; 
+	font-family:"微软雅黑";
+}
